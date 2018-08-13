@@ -2,12 +2,14 @@ import React, {Component} from 'react'
 import {NavBar, List, WingBlank, WhiteSpace, InputItem, Radio, Button} from 'antd-mobile'
 
 import Logo from '../../components/logo/logo'
-
+import {connect} from 'react-redux'
+import {Redirect} from 'react-router-dom'
+import {register} from '../../redux/actions'
 
 /*
 注册路由组件
  */
-export default class Register extends Component {
+ class Register extends Component {
 
   // 初始化状态
   state = {
@@ -25,7 +27,7 @@ export default class Register extends Component {
 
   // 请求注册
   register = () => {
-    console.log(this.state)
+    this.props.register(this.state)
   }
 
   handleChange = (name, val) => {
@@ -35,7 +37,11 @@ export default class Register extends Component {
   }
 
   render () {
-    const {type} = this.state
+    const {type} = this.state;
+    const {redirectTo,msg}=this.props;
+      if(redirectTo) {
+          return <Redirect to={redirectTo}/>
+      }
     return (
       <div>
         <NavBar>用户注册</NavBar>
@@ -66,3 +72,7 @@ export default class Register extends Component {
     )
   }
 }
+export default connect(
+    state=>state.user,
+    {register}
+)(Register)
