@@ -10,6 +10,8 @@ import store from './redux/store'
 import Login from './container/login/login'
 import Register from './container/register/register'
 import Main from './container/main/main'
+import "./assets/css/main.less"
+
 
 //渲染组件标签到页面
 ReactDOM.render((

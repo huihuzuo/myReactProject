@@ -7,6 +7,8 @@
  */
 import {combineReducers} from 'redux'
 import {AUTH_SUCCESS,ERROR_MSG} from "./action-types";
+import {getRedirectPath} from "../utils";
+
 const initUser={
     username: '', // 用户名
     type: '', // 类型
@@ -16,17 +18,23 @@ const initUser={
 
 
 function user(state = initUser, action) {
+
     switch(action.type){
         case AUTH_SUCCESS:// 认证成功
-          return{...action.data, redirectTo: '/'}
+            const user=action.data
+
+          return{...user, redirectTo:getRedirectPath(user.type,user.header) };
         case ERROR_MSG: // 错误信息提示
-            return {...state, msg: action.data};
+            const msg=action.data
+
+            return {...state, msg};
         default:
           return state
-
     }
-
 }
+
+
+
 
 // 返回合并的reducer
 export default combineReducers({

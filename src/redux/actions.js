@@ -22,9 +22,9 @@ export function register({username,password,password2,type}){
         //异步ajax请求，得到响应
         const response=await reqRegister({username,password,type})
         //得到响应体数据
-        const result=response.data
+        const result=response.data;
         //如果是正确的
-        if(result.type===0){
+        if(result.code===0){
             dispatch(authSuccess(result.data))
         }else{
             //分发提示错误的action

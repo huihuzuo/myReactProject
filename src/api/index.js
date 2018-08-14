@@ -18,7 +18,7 @@ export const reqLogin=(user)=>ajax("./login",user,"POST");
 }*/
 
 //注册
-export const reqRegister=({username,password,type})=>ajax("./register",{username,password,type})
+export const reqRegister=({username,password,type})=>ajax("./register",{username,password,type},"POST")
 
 //登录
-export const reqLogin=({username,password})=>ajax("./register",{username,password});
+export const reqLogin=({username,password})=>ajax("./register",{username,password},"POST");

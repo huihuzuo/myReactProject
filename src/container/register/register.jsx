@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 import {register} from '../../redux/actions'
 
+
 /*
 注册路由组件
  */
@@ -38,7 +39,8 @@ import {register} from '../../redux/actions'
 
   render () {
     const {type} = this.state;
-    const {redirectTo,msg}=this.props;
+    const {redirectTo,msg}=this.props.user;
+    console.log(this.props)
       if(redirectTo) {
           return <Redirect to={redirectTo}/>
       }
@@ -48,6 +50,7 @@ import {register} from '../../redux/actions'
         <Logo/>
         <WingBlank>
           <List>
+            <p className="error-msg">{msg}</p>
             <InputItem type='text' placeholder='请输入用户名'
                        onChange={(val) => this.handleChange('username', val)}>用户名: </InputItem>
             <WhiteSpace/>
@@ -72,7 +75,12 @@ import {register} from '../../redux/actions'
     )
   }
 }
+
+//本身是一个ui组件，但会包装成一个对应的容器组件
 export default connect(
-    state=>state.user,
-    {register}
+    state=>({user:state.user}),//向UI组件Register中传入哪些一般属性
+    {register} //向UI组件中传入哪些函数属性
+              //传给UI组件的不是异步action函数本身，而是包含分发异步action的一个新的函数
 )(Register)
+
+//函数属性：
