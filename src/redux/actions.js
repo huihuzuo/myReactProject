@@ -1,13 +1,25 @@
 /*包含所有action creator函数的模块*/
 
-import {AUTH_SUCCESS, ERROR_MSG} from "./action-types";
-import {reqRegister,reqLogin} from "../api";
+import {
+  AUTH_SUCCESS,
+  ERROR_MSG,
+  RECEIVE_USER,
+  RESET_USER,
+  RECEIVE_USER_LIST
+} from "./action-types";
+import {reqRegister,reqLogin,reqUpdateUser,reqUserList,reqUser} from "../api";
 
 
-//同步错误信息
+//显示错误信息的同步action
 const errorMsg=(msg)=>({type:ERROR_MSG,data:msg});
-//同步成功的响应
+//注册登录成功的同步action
 const authSuccess=(user)=>({type:AUTH_SUCCESS,data:user});
+//接收用户信息的同步action
+const receiveUser=(user)=>({type:RECEIVE_USER,data:user});
+//重置用户信息
+export const resetUser = (msg) => ({type: RESET_USER, data: msg})
+//用户列表
+const receiveUserList=(users)=>({type:RECEIVE_USER_LIST,data:users});
 
 //异步注册
 export function register({username,password,password2,type}){
@@ -49,3 +61,46 @@ export const login=({username,password})=>{
         }
     }
 };
+
+//完善异步更新用户信息
+export function updateUser(user){
+    return async dispatch=>{
+        // 1 发送异步ajax请求
+      const response= await reqUpdateUser(user);
+      const result=response.data;
+        //2 根据结果分发同步的action
+      if(result.code===0){
+         dispatch(receiveUser(result.data))
+      }else{
+         dispatch(receiveUser(result.msg))
+      }
+    }
+}
+
+/*
+异步获取用户
+ */
+export const getUser = () => {
+  return async dispatch => {
+    const response = await reqUser()
+    const result = response.data
+    if (result.code === 0) {
+      dispatch(receiveUser(result.data))
+    } else {
+      dispatch(resetUser(result.msg))
+    }
+  }
+}
+
+//异步获取用户列表
+export const getUserList=(type)=>{
+  return async dispatch=>{
+    const response = await reqUserList(type);
+    const result = response.data;
+    if(result.code===0){
+       dispatch(receiveUserList(result.data))
+    }
+
+
+  }
+}

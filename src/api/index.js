@@ -1,24 +1,24 @@
-//接口请求函数
-
-
-//包含n个接口请求函数的模块
-//每个函数返回的都是promise对象
-import ajax from "./ajax"
-
 /*
-//请求注册
-export const reqRegister=(user)=>ajax("./register",user,"POST");
-//请求登录
-export const reqLogin=(user)=>ajax("./login",user,"POST");
-*/
+包含了n个接口请求的函数的模块
+函数返回值为: promise
+ */
 
+import ajax from './ajax'
 
-/*export function reqRegister(user){
-    return ajax("./register",{username,password,type},"POST")
-}*/
+// 注册接口
+export const reqRegister = (user) => ajax('/register', user, 'POST')
+// 登陆接口
+export const reqLogin = ({username, password}) => ajax('/login',{username, password}, 'POST')
+// 更新用户接口
+export const reqUpdateUser = (user) => ajax('/update', user, 'POST')
+// 获取用户信息
+export const reqUser = () => ajax('/user')
 
-//注册
-export const reqRegister=({username,password,type})=>ajax("./register",{username,password,type},"POST")
+// 获取用户列表
+export const reqUserList = (type) => ajax('/userlist', {type})
 
-//登录
-export const reqLogin=({username,password})=>ajax("./register",{username,password},"POST");
+// 获取当前用户的聊天消息列表
+export const reqChatMsgList = () => ajax('/msglist')
+
+// 修改指定消息为已读
+export const reqReadMsg = (from) => ajax('/readmsg', {from}, 'POST')

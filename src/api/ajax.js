@@ -1,5 +1,9 @@
 //使用axios封装ajax请求的函数模块
 import axios from "axios";
+
+//请求获取用户列表
+export const reqUserList=(type)=>ajax("/list",{type});
+
 export default function ajax(url,data={},type="GET"){
      //get请求
     if(type==="GET"){

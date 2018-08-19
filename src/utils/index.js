@@ -25,6 +25,5 @@ export function getRedirectPath(type,header){
   if(!header){
     path+="info";
   }
-
   return path
 }
